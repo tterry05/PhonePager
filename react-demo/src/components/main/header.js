@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-export default function(){
+export default function Header(){
     return( 
         <Grid item xs={12} justifyContent="center">
             <Box sx={{backgroundColor: '#00ADB5', textAlign: 'center'}}>
