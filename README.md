@@ -16,3 +16,7 @@ Color Guidelines:
 #00ADB5 : Aqua
 #EEEEEE : Off White
 
+Database Ideas:
+Firebase
+
+
