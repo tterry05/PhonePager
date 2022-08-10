@@ -15,9 +15,9 @@ export default function Main() {
             <Grid item xs={12}>
                 <Button/>
             </Grid>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
                 <DataTable/>
-            </Grid> */}
+            </Grid> 
         </Grid>
     );
 }
