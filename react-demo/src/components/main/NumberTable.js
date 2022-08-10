@@ -6,6 +6,7 @@ export default function NumberTable(){
         return { 
             phoneNumber: num,
             id: Math.random(),
+            date: new Date().toTimeString().substring(0, new Date().toTimeString().indexOf(' ')),
          };
       }
       
@@ -13,75 +14,25 @@ export default function NumberTable(){
         createData('4143017099'),
       ];
       
-
+      console.log(rows[0].date);
         return (
             <TableContainer
               component={Paper}
               align="center"
-              sx={{
-                backgroundColor: '#3764A8',
-                color: 'white',
-                fontSize: 'large',
-                margin: 'auto',
-              }}
             >
               <Table aria-label="customized table">
-                <TableHead
-                  sx={{
-                    backgroundColor: '#3764A8',
-                    color: 'white',
-                    fontSize: 'large',
-                  }}
-                >
-                  <TableRow
-                    sx={{
-                      backgroundColor: '#3764A8',
-                      color: 'white',
-                      fontSize: 'large',
-                    }}
-                  >
-                    <TableCell
-                      align="left"
-                      sx={{
-                        color: 'white',
-                        fontSize: 'large',
-                      }}
-                    >
-                      <Grid container>
-                        <Grid item xs={6} />
-                        <Grid item xs={2}>
-                          Phone #
-                        </Grid>
-                      </Grid>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">
+                      Phone #
                     </TableCell>
-      
-                    <TableCell
-                      align="left"
-                      sx={{
-                        color: 'white',
-                        fontSize: 'large',
-                      }}
-                    >
+                    <TableCell align="left">
                       ID
                     </TableCell>
-      
-                    <TableCell
-                      align="left"
-                      sx={{
-                        color: 'white',
-                        fontSize: 'large',
-                      }}
-                    >
+                    <TableCell align="left">
                       Date
                     </TableCell>
-      
-                    <TableCell
-                      align="left"
-                      sx={{
-                        color: 'white',
-                        fontSize: 'large',
-                      }}
-                    >
+                    <TableCell align="left">
                       Delete
                     </TableCell>
                   </TableRow>
@@ -98,6 +49,8 @@ export default function NumberTable(){
                     >
                       <TableCell align="left">{row.id}</TableCell>
                       <TableCell align="left">{row.phoneNumber}</TableCell>
+                      <TableCell align="left">{row.date}</TableCell>
+                      <TableCell align="left">*Delete Placeholder*</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
