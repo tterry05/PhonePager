@@ -1,20 +1,34 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Grid, Typography, Paper } from '@mui/material';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 export default function NumberTable(){
+  const firebaseConfig = {
+    apiKey: "AIzaSyDer3pj47n5rcN2zoQQCtAPvbhac5HbUF0",
+    authDomain: "phone-pager.firebaseapp.com",
+    databaseURL: "https://phone-pager-default-rtdb.firebaseio.com",
+    projectId: "phone-pager",
+    storageBucket: "phone-pager.appspot.com",
+    messagingSenderId: "614291515117",
+    appId: "1:614291515117:web:8cc783e9f07db80c258ee4",
+    measurementId: "G-ZLZ1FLFD3H"
+  };
+  initializeApp(firebaseConfig);
 
-    function createData(num) {
-        return { 
-            phoneNumber: num,
-            id: Math.random(),
-            date: new Date().toTimeString().substring(0, new Date().toTimeString().indexOf(' ')),
-         };
-      }
-      
-      const rows = [
-        createData('4143017099'),
-      ];
-      
-      console.log(rows[0].date);
+  const db = getFirestore();
+  const colRef = collection(db, 'phone-numbers');
+  const numbers = [];
+  getDocs(colRef)
+  .then(snapshot => {
+    snapshot.docs.forEach(doc => {
+      numbers.push({ ...doc.data(), id: doc.id })
+    })
+  })
+  .catch(err => {
+    console.log(err.message)
+  })
+  const number = numbers;
+  console.log(number[0]);
         return (
             <TableContainer
               component={Paper}
@@ -38,7 +52,7 @@ export default function NumberTable(){
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row, index) => (
+                  {numbers.map((row, index) => (
                     <TableRow
                       key={row.id}
                       sx={
@@ -48,7 +62,7 @@ export default function NumberTable(){
                       }
                     >
                       <TableCell align="left">{row.id}</TableCell>
-                      <TableCell align="left">{row.phoneNumber}</TableCell>
+                      <TableCell align="left">{row.phonenumber}</TableCell>
                       <TableCell align="left">{row.date}</TableCell>
                       <TableCell align="left">*Delete Placeholder*</TableCell>
                     </TableRow>

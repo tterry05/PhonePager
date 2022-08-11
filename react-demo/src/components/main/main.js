@@ -6,7 +6,6 @@ import DataTable from './NumberTable';
 import Box from '@mui/material/Box';
 
 export default function Main() {
-    console.log('working');
     return (
         <Grid container justifyContent="center" rowSpacing={2}>
             <Grid item xs={12}>
