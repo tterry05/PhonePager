@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Grid, Typography, Paper } from '@mui/material';
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 export default function NumberTable(){
   const firebaseConfig = {
@@ -13,22 +13,32 @@ export default function NumberTable(){
     appId: "1:614291515117:web:8cc783e9f07db80c258ee4",
     measurementId: "G-ZLZ1FLFD3H"
   };
-  initializeApp(firebaseConfig);
+  // init firebase
+initializeApp(firebaseConfig)
 
-  const db = getFirestore();
-  const colRef = collection(db, 'phone-numbers');
-  const numbers = [];
-  getDocs(colRef)
+// init services
+const db = getFirestore()
+
+// collection ref
+const colRef = collection(db, 'phone-numbers')
+let numbers = [];
+// get collection data
+getDocs(colRef)
   .then(snapshot => {
+    // console.log(snapshot.docs)
     snapshot.docs.forEach(doc => {
       numbers.push({ ...doc.data(), id: doc.id })
     })
+    console.log(numbers)
   })
   .catch(err => {
     console.log(err.message)
   })
-  const number = numbers;
-  console.log(number[0]);
+  // takes the json string and makes it into an object
+  for(let i = 0; i < numbers.length; i++){
+    numbers[i] = JSON.parse(numbers[i]);
+  }
+  console.log(numbers[0].date);
         return (
             <TableContainer
               component={Paper}
