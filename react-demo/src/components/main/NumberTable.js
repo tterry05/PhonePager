@@ -20,25 +20,28 @@ initializeApp(firebaseConfig)
 const db = getFirestore()
 
 // collection ref
-const colRef = collection(db, 'phone-numbers')
+const colRef = collection(db, 'numbers')
 let numbers = [];
 // get collection data
-getDocs(colRef)
-  .then(snapshot => {
-    // console.log(snapshot.docs)
+getDocs(colRef).then(snapshot => {
     snapshot.docs.forEach(doc => {
       numbers.push({ ...doc.data(), id: doc.id })
     })
-    console.log(numbers)
   })
   .catch(err => {
     console.log(err.message)
   })
-  // takes the json string and makes it into an object
-  for(let i = 0; i < numbers.length; i++){
-    numbers[i] = JSON.parse(numbers[i]);
-  }
-  console.log(numbers[0].date);
+  console.log(numbers)
+  let num = [
+    {
+      id: '1',
+      number: '+1 (555) 555-5555',
+      status: 'active'
+    }
+  ]
+  console.log(num)
+  console.log(num[0].number)
+
         return (
             <TableContainer
               component={Paper}
