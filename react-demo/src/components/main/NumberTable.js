@@ -23,18 +23,21 @@ const db = getFirestore()
 const colRef = collection(db, 'numbers')
 const [numbers, setNumbers] = useState([])
 
-const getNumbers = async () => {
+const getNumbers = async ()  => {
   const data = await getDocs(colRef);
   setNumbers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 };
-getNumbers();
-
+const getList = () => {
+  getNumbers();
+}
 const deleteNumber = async (id) => {
   const del = doc(db, 'numbers', id);
   await deleteDoc(del);
   getNumbers();
 }
         return (
+          <div>
+          <Button variant="contained" onClick={getList}>Get List</Button>
             <TableContainer
               component={Paper}
               align="center"
@@ -66,8 +69,8 @@ const deleteNumber = async (id) => {
                           : { background: 'white' }
                       }
                     >
+                      <TableCell align="left">{row.number}</TableCell>
                       <TableCell align="left">{row.id}</TableCell>
-                      <TableCell align="left">{row.phonenumber}</TableCell>
                       <TableCell align="left">{row.date}</TableCell>
                       <TableCell align="left"><Button variant="contained" onClick={(e) => deleteNumber(row.id)}>Delete</Button></TableCell>
                     </TableRow>
@@ -75,5 +78,6 @@ const deleteNumber = async (id) => {
                 </TableBody>
               </Table>
             </TableContainer>
+            </div>
         );
       }
