@@ -1,7 +1,7 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Grid, Typography, Paper } from '@mui/material';
+import React, {useState} from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Grid, Typography, Paper, Button } from '@mui/material';
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 export default function NumberTable(){
   const firebaseConfig = {
     apiKey: "AIzaSyDer3pj47n5rcN2zoQQCtAPvbhac5HbUF0",
@@ -21,27 +21,19 @@ const db = getFirestore()
 
 // collection ref
 const colRef = collection(db, 'numbers')
-let numbers = [];
-// get collection data
-getDocs(colRef).then(snapshot => {
-    snapshot.docs.forEach(doc => {
-      numbers.push({ ...doc.data(), id: doc.id })
-    })
-  })
-  .catch(err => {
-    console.log(err.message)
-  })
-  console.log(numbers)
-  let num = [
-    {
-      id: '1',
-      number: '+1 (555) 555-5555',
-      status: 'active'
-    }
-  ]
-  console.log(num)
-  console.log(num[0].number)
+const [numbers, setNumbers] = useState([])
 
+const getNumbers = async () => {
+  const data = await getDocs(colRef);
+  setNumbers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+};
+getNumbers();
+
+const deleteNumber = async (id) => {
+  const del = doc(db, 'numbers', id);
+  await deleteDoc(del);
+  getNumbers();
+}
         return (
             <TableContainer
               component={Paper}
@@ -77,7 +69,7 @@ getDocs(colRef).then(snapshot => {
                       <TableCell align="left">{row.id}</TableCell>
                       <TableCell align="left">{row.phonenumber}</TableCell>
                       <TableCell align="left">{row.date}</TableCell>
-                      <TableCell align="left">*Delete Placeholder*</TableCell>
+                      <TableCell align="left"><Button variant="contained" onClick={(e) => deleteNumber(row.id)}>Delete</Button></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
