@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, Grid, Typography, Paper, Button } from '@mui/material';
 import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-export default function NumberTable(){
+export default function NumberTable({updateTable}){
   const firebaseConfig = {
     apiKey: "AIzaSyDer3pj47n5rcN2zoQQCtAPvbhac5HbUF0",
     authDomain: "phone-pager.firebaseapp.com",
@@ -27,17 +27,22 @@ const getNumbers = async ()  => {
   const data = await getDocs(colRef);
   setNumbers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 };
-const getList = () => {
-  getNumbers();
-}
 const deleteNumber = async (id) => {
   const del = doc(db, 'numbers', id);
   await deleteDoc(del);
   getNumbers();
 }
+
+if(updateTable === 'true'){
+  getNumbers();
+}
+
+
+// sorts array by date
+
         return (
           <div>
-          <Button variant="contained" onClick={getList}>Get List</Button>
+          <Button variant="contained" onClick={getNumbers}>Get List</Button>
             <TableContainer
               component={Paper}
               align="center"

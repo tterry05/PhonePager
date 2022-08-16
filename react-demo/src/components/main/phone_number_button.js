@@ -5,17 +5,18 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../services/firebaseConfig';
 import { getNumbers } from './NumberTable';
 
-export default function PhoneNumberButton(){
+export default function PhoneNumberButton({update}){
     const [phoneNumber, setPhoneNumber] = React.useState('');
     initializeApp(firebaseConfig)
     const db = getFirestore()
     const number = {
         number: phoneNumber,
-        date: new Date().toTimeString().substring(0, new Date().toTimeString().indexOf(' '))
+        date: new Date().toString()
     }
     const onClickHandler = () => {
         addDoc(collection(db, "numbers"), number)
         setPhoneNumber('')
+        update('true')
     }
     
     return(
